@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject GameOverGO;
     public GameObject scoreUITextGO;
     public GameObject instructionImg;
+    public GameObject quitButton;
 
     public enum GameManagerState
     {
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
             case GameManagerState.Opening:
                 GameOverGO.SetActive(false);
                 playButton.SetActive(true);
+                quitButton.SetActive(false);
                 break;
             case GameManagerState.Gameplay:
                 scoreUITextGO.GetComponent<GameScore>().Score = 0;
@@ -43,6 +45,7 @@ public class GameManager : MonoBehaviour
             case GameManagerState.GameOver:
                 asteroidSpawner.GetComponent<AsteroidSpawner>().UnscheduleAsteroidSpawner();
                 GameOverGO.SetActive(true);
+                quitButton.SetActive(true);
                 Invoke("ChangeToOpeningState", 8f);
                 break;
         }
@@ -63,6 +66,11 @@ public class GameManager : MonoBehaviour
     public void Instruction()
     {
         instructionImg.SetActive(!instructionImg.activeSelf);
+    }
+
+    public void QuitGame()
+    {
+        UnityEditor.EditorApplication.isPlaying = false;
     }
 
     public void ChangeToOpeningState()
